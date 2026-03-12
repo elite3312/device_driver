@@ -25,7 +25,7 @@ static int my_open(struct inode *inode, struct file *file)
 	return 0;
 }
 
-static int my_read(struct file *file, char __user *user_buffer,
+static ssize_t my_read(struct file *file, char __user *user_buffer,
 					size_t size, loff_t *offset)
 {
 	char *message = "Hello from kernel space!\n";
@@ -51,7 +51,7 @@ static int my_read(struct file *file, char __user *user_buffer,
 	return bytes_to_read;  /* Return number of bytes read */
 }
 
-static int my_write(struct file *file, const char __user *user_buffer,
+static ssize_t my_write(struct file *file, const char __user *user_buffer,
 					size_t size, loff_t * offset)
 {
 	return 0;

@@ -12,7 +12,7 @@ all: driver test
 
 # Build the kernel module
 driver:
-	make -C $(KDIR) M=$(PWD) modules
+	make -C $(KDIR) M=$(CURDIR) modules
 
 # Build the test program
 test: test_char
@@ -22,13 +22,13 @@ test_char: test_char.c
 
 # Clean targets
 clean:
-	make -C $(KDIR) M=$(PWD) clean
+	make -C $(KDIR) M=$(CURDIR) clean
 	rm -f test_char
 
 # Install and test targets
 install: driver
 	sudo insmod my_char.ko
-	sudo chmod 666 /dev/my_char*
+	$(MAKE) create-nodes
 
 uninstall:
 	sudo rmmod my_char

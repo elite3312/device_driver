@@ -17,6 +17,7 @@ make all
 ### 2. Load the driver and run test
 ```bash
 # Load the kernel module
+# sudo apt update && sudo apt install -y flex bison
 sudo make install
 
 # Run the test program
@@ -71,11 +72,25 @@ sudo rmmod my_char
 
 ## Troubleshooting
 
+### Missing kernel headers or build errors
+If you get errors about missing header files (like `classmap.h`) or build failures:
+```bash
+# Try installing additional kernel development packages
+sudo apt update
+sudo apt install -y linux-headers-$(uname -r) linux-source build-essential
+sudo apt install -y raspberrypi-kernel-headers  # For Raspberry Pi specifically
+
+# If still failing, try building with verbose output
+make V=1 driver
+```
+
+### Device nodes don't appear automatically
 If device nodes don't appear automatically:
 ```bash
 sudo make create-nodes
 ```
 
+### Permission errors
 If you get permission errors:
 ```bash
 sudo chmod 666 /dev/my_char*
